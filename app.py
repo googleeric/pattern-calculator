@@ -29,6 +29,7 @@ def index():
     #     writer = csv.DictWriter(csvfile, fieldnames=fieldnames)
     #     writer.writeheader()
     #     writer.writerows(allSymbols)  # Write all symbols at once
+#helloworld
 
 
     return  render_template('index.html')
