@@ -1,0 +1,101 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Exchange Data Table</title>
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            background-color: #f4f4f4;
+            margin: 20px;
+        }
+        .table-container {
+            width: 80%;
+            margin: auto;
+            background: white;
+            padding: 20px;
+            border-radius: 10px;
+            box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
+        }
+        table {
+            width: 100%;
+            border-collapse: collapse;
+        }
+        th, td {
+            padding: 12px;
+            text-align: left;
+            border-bottom: 1px solid #ddd;
+        }
+        th {
+            background-color: #007bff;
+            color: white;
+            cursor: pointer;
+        }
+        tr:hover {
+            background-color: #f1f1f1;
+        }
+    </style>
+   
+</head>
+<body>
+    <div class="table-container">
+        <table>
+            <thead>
+                <tr>
+                    <th>Exchange</th>
+                    <th id="priceChange">Price</th>
+                    <th>Price Change%</th>
+                    <th>Volume</th>
+                    <th>High</th>
+                    <th>Low</th>
+                </tr>
+            </thead>
+            <tbody>
+                <tr>
+                    <td>Binance</td>
+                    <td>$45,200</td>
+                    <td>+2.5%</td>
+                    <td>10M</td>
+                    <td>$46,000</td>
+                    <td>$44,500</td>
+                </tr>
+                <tr>
+                    <td>Coinbase</td>
+                    <td>$45,150</td>
+                    <td>+2.3%</td>
+                    <td>8M</td>
+                    <td>$45,800</td>
+                    <td>$44,600</td>
+                </tr>
+                <tr>
+                    <td>Kraken</td>
+                    <td>$45,300</td>
+                    <td>+1.8%</td>
+                    <td>5M</td>
+                    <td>$45,700</td>
+                    <td>$44,900</td>
+                </tr>
+                <tr>
+                    <td>Bitfinex</td>
+                    <td>$45,400</td>
+                    <td>+3.1%</td>
+                    <td>6M</td>
+                    <td>$45,900</td>
+                    <td>$45,100</td>
+                </tr>
+                <tr>
+                    <td>Huobi</td>
+                    <td>$45,250</td>
+                    <td>+2.9%</td>
+                    <td>7M</td>
+                    <td>$45,750</td>
+                    <td>$44,700</td>
+                </tr>
+            </tbody>
+        </table>
+    </div>
+
+    <script src="{{url_for('static', filename='chart.js')}}"></script>
+</body>
+</html>
