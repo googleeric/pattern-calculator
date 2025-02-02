@@ -1,5 +1,5 @@
 Flask==2.2.3
-binance==5.1.0
+python-binance==1.0.18  # Replace binance with python-binance
 Flask-Caching==2.0.0
 talib==0.4.0
 gunicorn==20.1.0
