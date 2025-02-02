@@ -1,5 +1,5 @@
-Flask==2.2.3
-binance==5.1.0
-Flask-Caching==2.0.0
-talib==0.4.0
-gunicorn==20.1.0
+Flask
+python-binance
+Flask-Caching
+talib
+gunicorn
