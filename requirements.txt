@@ -1,5 +1,5 @@
 Flask
 python-binance
 Flask-Caching
-talib==0.4.0
+TA-Lib
 gunicorn
