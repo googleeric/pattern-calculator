@@ -1,0 +1,5 @@
+Flask
+binance
+Flask-Caching
+talib
+gunicorn
