@@ -86,7 +86,7 @@ def fetch_candlestick(symbol):
 def history():
     try:
         exchange_info = client.get_exchange_info()
-        all_symbols = [s['symbol'] for s in exchange_info['symbols'] if s['symbol'].endswith('USDT')][:200]
+        all_symbols = [s['symbol'] for s in exchange_info['symbols'] if s['symbol'].endswith('USDT')][:50]
 
         all_candlesticks = {}
 
