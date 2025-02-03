@@ -4,6 +4,7 @@ from binance import Client, ThreadedWebsocketManager, ThreadedDepthCacheManager
 import datetime
 import concurrent.futures
 from flask_caching import Cache
+import os
 
 app = Flask(__name__)
 
@@ -12,7 +13,16 @@ app.config['CACHE_TYPE'] = 'simple'
 app.config['CACHE_DEFAULT_TIMEOUT'] = 600  # 10 minutes
 cache = Cache(app)
 
-client = Client(config.API_Key, config.API_Secret)
+# Load API keys from environment variables
+API_KEY = os.getenv("BINANCE_API_KEY")
+API_SECRET = os.getenv("BINANCE_API_SECRET")
+
+if not API_KEY or not API_SECRET:
+    raise ValueError("Missing Binance API credentials. Set BINANCE_API_KEY and BINANCE_API_SECRET as environment variables.")
+
+client = Client(API_KEY, API_SECRET)
+
+# client = Client(config.API_Key, config.API_Secret)
 
 @app.route('/')
 def index():
