@@ -4,7 +4,7 @@ from binance import Client, ThreadedWebsocketManager, ThreadedDepthCacheManager
 import datetime
 import concurrent.futures
 from flask_caching import Cache
-import os
+# import os
 
 app = Flask(__name__)
 
@@ -14,15 +14,19 @@ app.config['CACHE_DEFAULT_TIMEOUT'] = 600  # 10 minutes
 cache = Cache(app)
 
 # Load API keys from environment variables
-API_KEY = os.getenv("BINANCE_API_KEY")
-API_SECRET = os.getenv("BINANCE_API_SECRET")
+# API_KEY = os.getenv("BINANCE_API_KEY")
+# API_SECRET = os.getenv("BINANCE_API_SECRET")
 
-if not API_KEY or not API_SECRET:
-    raise ValueError("Missing Binance API credentials. Set BINANCE_API_KEY and BINANCE_API_SECRET as environment variables.")
+# Initialize Binance client (replace with your API keys)
+API_Key = "R6OJdBchvnp9USShft9EM6NmrMyDlyzuMwrNzZXnJ39MRGhBWD6efmD9BN4ImQws"
+API_Secret = "HiHgLLyox4SuESXoUANRc5JcpGoOeLB4g1bra7OmfKyQqN7bn49VhF8lLC6GZWFJ"
 
-client = Client(API_KEY, API_SECRET)
+# if not API_KEY or not API_SECRET:
+#     raise ValueError("Missing Binance API credentials. Set BINANCE_API_KEY and BINANCE_API_SECRET as environment variables.")
 
-# client = Client(config.API_Key, config.API_Secret)
+# client = Client(API_KEY, API_SECRET)
+
+client = Client(API_Key, API_Secret)
 
 @app.route('/')
 def index():
@@ -64,7 +68,7 @@ def fetch_candlestick(symbol):
             return None
 
         processed_data = [
-            {"time": data[0] / 1000, "open": data[1], "high": data[2], "low": data[3], "close": data[50]}
+            {"time": data[0] / 1000, "open": data[1], "high": data[2], "low": data[3], "close": data[4]}
             for data in candlesticks
         ]
 
