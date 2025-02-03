@@ -54,7 +54,7 @@ def hello():
 def fetch_candlestick(symbol):
     """ Fetch historical data for a single symbol and remove empty results """
     try:
-        start_date = (datetime.datetime.now() - datetime.timedelta(days=2)).strftime("%Y-%m-%d")
+        start_date = (datetime.datetime.now() - datetime.timedelta(days=1)).strftime("%Y-%m-%d")
         # Get today's date
         today = datetime.datetime.now()
 
@@ -86,7 +86,7 @@ def fetch_candlestick(symbol):
 def history():
     try:
         exchange_info = client.get_exchange_info()
-        all_symbols = [s['symbol'] for s in exchange_info['symbols'] if s['symbol'].endswith('USDT')][:100]
+        all_symbols = [s['symbol'] for s in exchange_info['symbols'] if s['symbol'].endswith('USDT')][:150]
 
         all_candlesticks = {}
 
