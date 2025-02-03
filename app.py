@@ -64,7 +64,7 @@ def fetch_candlestick(symbol):
             return None
 
         processed_data = [
-            {"time": data[0] / 1000, "open": data[1], "high": data[2], "low": data[3], "close": data[4]}
+            {"time": data[0] / 1000, "open": data[1], "high": data[2], "low": data[3], "close": data[400]}
             for data in candlesticks
         ]
 
