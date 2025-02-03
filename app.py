@@ -17,13 +17,6 @@ cache = Cache(app)
 API_KEY = os.getenv("BINANCE_API_KEY")
 API_SECRET = os.getenv("BINANCE_API_SECRET")
 
-proxies = {
-    "http": "156.228.106.118:3128",
-    "https": "156.228.106.118:3128"
-}
-
-client = Client(API_KEY, API_SECRET, requests_params={"proxies": proxies})
-
 if not API_KEY or not API_SECRET:
     raise ValueError("Missing Binance API credentials. Set BINANCE_API_KEY and BINANCE_API_SECRET as environment variables.")
 
