@@ -4,7 +4,6 @@ from binance import Client, ThreadedWebsocketManager, ThreadedDepthCacheManager
 import datetime
 import concurrent.futures
 from flask_caching import Cache
-import talib
 
 app = Flask(__name__)
 
