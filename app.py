@@ -1,4 +1,4 @@
-from flask import Flask, render_template, jsonify
+from flask import Flask, render_template, jsonify, request
 # import config, csv
 from binance.client import Client
 import datetime
@@ -14,7 +14,7 @@ CORS(app)
 
 # Flask Cache Configuration (Stores data for 10 minutes)
 app.config['CACHE_TYPE'] = 'simple'
-app.config['CACHE_DEFAULT_TIMEOUT'] = 6000  # 10 minutes
+app.config['CACHE_DEFAULT_TIMEOUT'] = 600  # 10 minutes
 cache = Cache(app)
 
 # Load API keys from environment variables
@@ -58,12 +58,12 @@ def hello():
 def fetch_candlestick(symbol):
     """ Fetch historical data for a single symbol and remove empty results """
     try:
-        start_date = (datetime.datetime.now() - datetime.timedelta(days=2)).strftime("%Y-%m-%d")
+        start_date = (datetime.datetime.now() - datetime.timedelta(days=1)).strftime("%Y-%m-%d")
         # Get today's date
         today = datetime.datetime.now()
 
         # Add one day to today's date
-        end_date = (today + datetime.timedelta(days=2)).strftime("%Y-%m-%d")
+        end_date = (today + datetime.timedelta(days=1)).strftime("%Y-%m-%d")
         interval = Client.KLINE_INTERVAL_15MINUTE
 
         candlesticks = client.get_historical_klines(symbol, interval, start_date, end_date)
@@ -86,11 +86,11 @@ def fetch_candlestick(symbol):
 
 
 @app.route('/history')
-@cache.cached(timeout=6000)  # Cache results for 10 minutes
+@cache.cached(timeout=600)  # Cache results for 10 minutes
 def history():
     try:
         exchange_info = client.get_exchange_info()
-        all_symbols = [s['symbol'] for s in exchange_info['symbols'] if s['symbol'].endswith('USDT')][:350]
+        all_symbols = [s['symbol'] for s in exchange_info['symbols'] if s['symbol'].endswith('USDT')][:100]
 
         all_candlesticks = {}
 
