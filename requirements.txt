@@ -1,4 +1,5 @@
 Flask
 python-binance
 Flask-Caching
+Flask-Cors
 gunicorn
