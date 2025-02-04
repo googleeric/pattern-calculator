@@ -14,7 +14,7 @@ CORS(app)
 
 # Flask Cache Configuration (Stores data for 10 minutes)
 app.config['CACHE_TYPE'] = 'simple'
-app.config['CACHE_DEFAULT_TIMEOUT'] = 600  # 10 minutes
+app.config['CACHE_DEFAULT_TIMEOUT'] = 6000  # 10 minutes
 cache = Cache(app)
 
 # Load API keys from environment variables
@@ -86,7 +86,7 @@ def fetch_candlestick(symbol):
 
 
 @app.route('/history')
-@cache.cached(timeout=600)  # Cache results for 10 minutes
+@cache.cached(timeout=6000)  # Cache results for 10 minutes
 def history():
     try:
         exchange_info = client.get_exchange_info()
