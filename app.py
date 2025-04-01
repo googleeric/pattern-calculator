@@ -64,7 +64,7 @@ def fetch_candlestick(symbol):
 
         # Add one day to today's date
         end_date = (today + datetime.timedelta(days=1)).strftime("%Y-%m-%d")
-        interval = Client.KLINE_INTERVAL_15MINUTE
+        interval = Client.KLINE_INTERVAL_5MINUTE
 
         candlesticks = client.get_historical_klines(symbol, interval, start_date, end_date)
 
