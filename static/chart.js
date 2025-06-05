@@ -55,7 +55,7 @@ async function fetchCandlestickData() {
             try {
                 const chart = LightweightCharts.createChart(container, {
                     width: container.clientWidth,
-                    height: 300,
+                    height: 500,
                     layout: {
                         background: { type: 'solid', color: '#000000' },
                         textColor: 'rgba(255, 255, 255, 0.9)',
@@ -102,7 +102,7 @@ async function fetchCandlestickData() {
 }
 
 function setupWebSocket(symbol, candleSeries, originalSymbol) {
-    const binanceSocket = new WebSocket(`wss://stream.binance.com:9443/ws/${symbol}@kline_15m`);
+    const binanceSocket = new WebSocket(`wss://stream.binance.com:9443/ws/${symbol}@kline_5m`);
 
     binanceSocket.onmessage = function (event) {
         const message = JSON.parse(event.data);
@@ -156,22 +156,22 @@ function addCandlestickPatternMarkers(data, candleSeries, symbol) {
         // Hammer (Small body, long lower wick)
         if (bodySize > 0 && lowerWick >= bodySize * 2 && upperWick <= bodySize) {
             marker = {
-                time: candle.time,
-                position: 'belowBar',
-                color: 'green',
-                shape: 'arrowUp',
-                text: 'Hammer'
+                // time: candle.time,
+                // position: 'belowBar',
+                // color: 'green',
+                // shape: 'arrowUp',
+                // text: 'Hammer'
             };
         }
 
         // Inverted Hammer (Small body, long upper wick)
         if (bodySize > 0 && upperWick >= bodySize * 2 && lowerWick <= bodySize) {
             marker = {
-                time: candle.time,
-                position: 'aboveBar',
-                color: 'red',
-                shape: 'arrowDown',
-                text: 'Inv Hammer'
+                // time: candle.time,
+                // position: 'aboveBar',
+                // color: 'red',
+                // shape: 'arrowDown',
+                // text: 'Inv Hammer'
             };
         }
 

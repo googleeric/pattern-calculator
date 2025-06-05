@@ -1,0 +1,154 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <title>20 Stock Charts</title>
+  <style>
+    body {
+      margin: 0;
+      font-family: sans-serif;
+      background: #f9f9f9;
+    }
+    .grid {
+      display: grid;
+      grid-template-columns: repeat(2, 1fr);
+      gap: 16px;
+      padding: 16px;
+    }
+    .chart-box {
+      background: #fff;
+      border: 1px solid #ccc;
+      padding: 8px;
+      box-shadow: 0 2px 4px rgba(0,0,0,0.1);
+    }
+    .chart-title {
+      font-size: 14px;
+      margin-bottom: 4px;
+    }
+    .chart {
+      height: 300px;
+    }
+  </style>
+</head>
+<body>
+  <div class="grid" id="chart-grid"></div>
+
+  <script src="https://unpkg.com/lightweight-charts@4.1.0/dist/lightweight-charts.standalone.production.js"></script>
+  <script>
+    const symbols = {
+        "NSE_EQ|INE002A01018" : "RELIANCE",
+        "NSE_EQ|INE018A01030" : "LT",
+        "NSE_EQ|INE040A01034": "HDFCBANK",
+        "NSE_EQ|INE467B01029": "TCS",
+        "NSE_EQ|INE062A01020": "SBIN",
+        "NSE_EQ|INE259A01022": "COLPAL",
+        "NSE_EQ|INE238A01034": "AXISBANK",
+        "NSE_EQ|INE860A01027": "HCLTECH",
+        "NSE_EQ|INE003A01024": "SIEMENS",
+        "NSE_EQ|INE245A01021": "TATAPOWER",
+        "NSE_EQ|INE669C01036": "TECHM",
+        "NSE_EQ|INE154A01025": "ITC",
+        "NSE_EQ|INE102D01028": "GODREJCP",
+        "NSE_EQ|INE917I01010": "BAJAJ-AUTO",
+        "NSE_EQ|INE768C01010": "ZYDUSWELL",
+        "NSE_EQ|INE528G01035": "YESBANK",
+        "NSE_EQ|INE575P01011": "STARHEALTH",
+        "NSE_EQ|INE766P01016": "MAHLOG",
+        "NSE_EQ|INE358U01012": "ZOTA",
+        "NSE_EQ|INE666D01022": "BOROSIL RENEWABLES LTD",
+        "NSE_EQ|INE397D01024": "BHARTIARTL",
+        "NSE_EQ|INE090A01021": "ICICIBANK",
+        "NSE_EQ|INE009A01021": "INFY",
+        "NSE_EQ|INE030A01027": "HINDUNILVR",
+        "NSE_EQ|INE0J1Y01017": "LICI",
+        "NSE_EQ|INE101A01026": "M&M",
+        "NSE_EQ|INE213A01029": "ONGC",
+        "NSE_EQ|INE752E01010": "POWERGRID",
+        "NSE_EQ|INE742F01042": "ADANIPORTS",
+        "NSE_EQ|INE423A01024": "ADANIENT",
+        "NSE_EQ|INE155A01022": "TATAMOTORS",
+        "NSE_EQ|INE081A01020": "TATASTEEL",
+        "NSE_EQ|INE205A01025": "VEDL",
+        "NSE_EQ|INE242A01010": "IOC",
+        "NSE_EQ|INE814H01011": "ADANIPOWER",
+        "NSE_EQ|INE522F01014": "COALINDIA"
+    };
+
+    const symbolKeys = Object.keys(symbols);
+    const chartGrid = document.getElementById("chart-grid");
+    const charts = {}; // Store chart + series refs
+
+    // Create chart containers
+    symbolKeys.forEach(key => {
+      const box = document.createElement('div');
+      box.className = 'chart-box';
+
+      const title = document.createElement('div');
+      title.className = 'chart-title';
+      title.innerText = symbols[key];
+
+      const chartDiv = document.createElement('div');
+      chartDiv.id = `chart-${key.replace(/\W+/g, '-')}`;
+      chartDiv.className = 'chart';
+
+      box.appendChild(title);
+      box.appendChild(chartDiv);
+      chartGrid.appendChild(box);
+
+      const chart = LightweightCharts.createChart(chartDiv, {
+        layout: {
+          background: { color: '#fff' },
+          textColor: '#000'
+        },
+        grid: {
+          vertLines: { color: '#eee' },
+          horzLines: { color: '#eee' }
+        },
+        timeScale: {
+          timeVisible: true,
+          secondsVisible: false
+        },
+        height: 300
+      });
+
+      const candleSeries = chart.addCandlestickSeries();
+      charts[key] = { chart, candleSeries };
+    });
+
+    function fetchAndUpdateAllCharts() {
+      fetch('/indian-stock')
+        .then(res => res.json())
+        .then(data => {
+          symbolKeys.forEach(key => {
+            const stockData = data[key];
+            if (!stockData || stockData.error) return;
+
+            const clean = stockData
+              .filter(candle =>
+                candle &&
+                typeof candle.time === 'number' &&
+                typeof candle.open === 'number' &&
+                typeof candle.high === 'number' &&
+                typeof candle.low === 'number' &&
+                typeof candle.close === 'number'
+              )
+              .sort((a, b) => a.time - b.time);
+
+            if (clean.length === 0) return;
+
+            charts[key].candleSeries.setData(clean);
+          });
+        })
+        .catch(err => {
+          console.error("Chart fetch error:", err);
+        });
+    }
+
+    // Initial load
+    fetchAndUpdateAllCharts();
+
+    // Update every 60 seconds
+    setInterval(fetchAndUpdateAllCharts, 60 * 1000);
+  </script>
+</body>
+</html>
